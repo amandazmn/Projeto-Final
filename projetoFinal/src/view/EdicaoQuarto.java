@@ -8,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 
 import model.Quarto;
 import net.miginfocom.swing.MigLayout;
-
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -34,7 +33,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class CadastroQuarto extends JFrame {
+public class EdicaoQuarto extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -64,11 +63,11 @@ public class CadastroQuarto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroQuarto(ArrayList<Quarto> listaQuarto, ListagemQuartos janela) {
+	public EdicaoQuarto(ArrayList<Quarto> listaQuarto, Quarto quartoSelecionado, ListagemQuartos janela) {
 		setFont(new Font("Ebrima", Font.PLAIN, 18));
-		setTitle("Cadastrar quarto");
+		setTitle("Editar quarto");
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(CadastroQuarto.class.getResource("/images/Icone.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EdicaoQuarto.class.getResource("/images/Icone.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1920, 1080);
 		contentPane = new JPanel();
@@ -82,10 +81,10 @@ public class CadastroQuarto extends JFrame {
 		lblNewLabel_1.setFont(new Font("Ebrima", Font.PLAIN, 20));
 
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(CadastroQuarto.class.getResource("/images/Logo.png")));
+		lblNewLabel.setIcon(new ImageIcon(EdicaoQuarto.class.getResource("/images/Logo.png")));
 
 		JLabel lblIconeCadastrarQuarto = new JLabel("");
-		lblIconeCadastrarQuarto.setIcon(new ImageIcon(CadastroQuarto.class.getResource("/images/CadastrarQuarto.png")));
+		lblIconeCadastrarQuarto.setIcon(new ImageIcon(EdicaoQuarto.class.getResource("/images/EditarQuarto.png")));
 
 		lblNewLabel_8 = new JLabel("Andar *");
 		lblNewLabel_8.setFont(new Font("Ebrima", Font.PLAIN, 20));
@@ -131,62 +130,90 @@ public class CadastroQuarto extends JFrame {
 
 		// Text
 		txtNumQuarto = new JTextField();
+		txtNumQuarto.setText(String.valueOf(quartoSelecionado.getNumero()));
 		txtNumQuarto.setColumns(10);
 
 		txtMaxHospedes = new JTextField();
+		txtMaxHospedes.setText(String.valueOf(quartoSelecionado.getMaxHospedes()));
 		txtMaxHospedes.setColumns(10);
 
 		txtCodigo = new JTextField();
+		txtCodigo.setText(String.valueOf(quartoSelecionado.getCodigo()));
 		txtCodigo.setColumns(10);
 
 		txtTamQuarto = new JTextField();
+		txtTamQuarto.setText(String.valueOf(quartoSelecionado.getTamanho()));
 		txtTamQuarto.setColumns(10);
 
 		txtPreco = new JTextField();
+		txtPreco.setText(String.valueOf(quartoSelecionado.getPreco()));
 		txtPreco.setColumns(10);
 
 		txtLimpeza = new JTextField();
+		txtLimpeza.setText(String.valueOf(quartoSelecionado.getDataLimpeza()));
 		txtLimpeza.setColumns(10);
 
 		// ComboBox
 		JComboBox comboBoxVista = new JComboBox();
 		comboBoxVista.setModel(new DefaultComboBoxModel<String>(new String[] {"Selecionar", "Mar", "Mar Parcial", "Piscina", "Jardim", "Cidade"}));
-
+		comboBoxVista.setSelectedItem(quartoSelecionado.getVista());
+		
 		JComboBox comboBoxStatus = new JComboBox();
 		comboBoxStatus.setModel(new DefaultComboBoxModel<String>(new String[] {"Selecionar", "Livre", "Ocupado", "Em manutenção"}));
-
+		comboBoxStatus.setSelectedItem(quartoSelecionado.getStatus());
+		
 		JComboBox comboBoxTipoCama = new JComboBox();
 		comboBoxTipoCama.setModel(new DefaultComboBoxModel<String>(new String[] {"Selecionar", "Cama queen size", "Cama king size", "Cama solteiro", "Bicama"}));
-
+		comboBoxTipoCama.setSelectedItem(quartoSelecionado.getCama());
+		
 		JComboBox comboBoxAndar = new JComboBox();
 		comboBoxAndar.setModel(new DefaultComboBoxModel<Integer>(new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}));
-
+		comboBoxAndar.setSelectedItem(quartoSelecionado.getAndar());
+		
 
 		// TextArea
 		JTextArea txtaComentario = new JTextArea();
+		if(quartoSelecionado.getComentarios() != null) {
+			txtaComentario.setText(String.valueOf(quartoSelecionado.getComentarios()));
+		}
 
 		JTextArea txtaDescQuarto = new JTextArea();
-
+		if(quartoSelecionado.getDescricao() != null) {
+			txtaDescQuarto.setText(String.valueOf(quartoSelecionado.getDescricao()));
+		}
+		
 		// RadioButton
 		JRadioButton rdbtnSimBanheira = new JRadioButton("Sim");
 		buttonGroupBanheira.add(rdbtnSimBanheira);
 		rdbtnSimBanheira.setFont(new Font("Ebrima", Font.PLAIN, 20));
 		rdbtnSimBanheira.setBackground(new Color(217, 217, 217));
+		if(quartoSelecionado.isBanheira() == true) {
+			rdbtnSimBanheira.setSelected(true);
+		}
 
 		JRadioButton rdbtnNaoBanheira = new JRadioButton("Não");
 		buttonGroupBanheira.add(rdbtnNaoBanheira);
 		rdbtnNaoBanheira.setFont(new Font("Ebrima", Font.PLAIN, 20));
 		rdbtnNaoBanheira.setBackground(new Color(217, 217, 217));
+		if(quartoSelecionado.isBanheira() == false) {
+			rdbtnNaoBanheira.setSelected(true);
+		}
 
 		JRadioButton rdbtnSimFrigobar = new JRadioButton("Sim");
 		buttonGroupFrigobar.add(rdbtnSimFrigobar);
 		rdbtnSimFrigobar.setFont(new Font("Ebrima", Font.PLAIN, 20));
 		rdbtnSimFrigobar.setBackground(new Color(217, 217, 217));
+		if(quartoSelecionado.isFrigobar() == true) {
+			rdbtnSimFrigobar.setSelected(true);
+		}
 
 		JRadioButton rdbtnNaoFrigobar = new JRadioButton("Não");
 		buttonGroupFrigobar.add(rdbtnNaoFrigobar);
 		rdbtnNaoFrigobar.setFont(new Font("Ebrima", Font.PLAIN, 20));
 		rdbtnNaoFrigobar.setBackground(new Color(217, 217, 217));
+		if(quartoSelecionado.isFrigobar() == false) {
+			rdbtnNaoFrigobar.setSelected(true);
+		}
 
 		// Button
 		lblSalvar = new JLabel("");
@@ -264,24 +291,36 @@ public class CadastroQuarto extends JFrame {
 					int andar = Integer.parseInt(String.valueOf(comboBoxAndar.getSelectedItem()));
 
 					if(erro2 == false) {
-						Quarto q = new Quarto(numQuarto, cama, maxHospedes, frigobar, banheira, preco, tamanho, andar, vista, status, limpeza, codigo);
+						
+						quartoSelecionado.setAndar(andar);
+						quartoSelecionado.setBanheira(banheira);
+						quartoSelecionado.setCama(cama);
+						quartoSelecionado.setCodigo(codigo);
+						quartoSelecionado.setDataLimpeza(limpeza);
+						quartoSelecionado.setFrigobar(frigobar);
+						quartoSelecionado.setMaxHospedes(maxHospedes);
+						quartoSelecionado.setNumero(numQuarto);
+						quartoSelecionado.setPreco(preco);
+						quartoSelecionado.setStatus(status);
+						quartoSelecionado.setTamanho(tamanho);
+						quartoSelecionado.setVista(vista);
+						
 						if(txtaComentario != null) {
 							String comentario = String.valueOf(txtaComentario.getText());
-							q.setComentarios(comentario);
+							quartoSelecionado.setComentarios(comentario);
 						}
 						if(txtaDescQuarto != null) {
 							String descricao = String.valueOf(txtaDescQuarto.getText());
-							q.setDescricao(descricao);
+							quartoSelecionado.setDescricao(descricao);
 						}
 						
-						listaQuarto.add(q);
 						janela.atualizarJTableModel();
 						dispose();
 					}
 				}
 			}
 		});
-		lblSalvar.setIcon(new ImageIcon(CadastroQuarto.class.getResource("/images/Salvar.png")));
+		lblSalvar.setIcon(new ImageIcon(EdicaoQuarto.class.getResource("/images/Salvar.png")));
 
 		lblCancelar = new JLabel("");
 		lblCancelar.addMouseListener(new MouseAdapter() {
@@ -290,7 +329,7 @@ public class CadastroQuarto extends JFrame {
 				dispose();
 			}
 		});
-		lblCancelar.setIcon(new ImageIcon(CadastroQuarto.class.getResource("/images/Cancelar.png")));
+		lblCancelar.setIcon(new ImageIcon(EdicaoQuarto.class.getResource("/images/Cancelar.png")));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
