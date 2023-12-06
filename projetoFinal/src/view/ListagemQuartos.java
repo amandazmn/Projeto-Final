@@ -14,14 +14,14 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
-import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
-
 import model.Quarto;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Font;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 
 public class ListagemQuartos extends JFrame {
@@ -39,6 +39,7 @@ public class ListagemQuartos extends JFrame {
 			public void run() {
 				try {
 					ListagemQuartos frame = new ListagemQuartos();
+					frame.setExtendedState(MAXIMIZED_BOTH);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,23 +58,18 @@ public class ListagemQuartos extends JFrame {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ListagemQuartos.class.getResource("/images/Icone.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1920, 1080);
+		setBounds(100, 100, 1420, 700);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(217, 217, 217));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(ListagemQuartos.class.getResource("/images/Logo.png")));
-		lblNewLabel.setBounds(38, 11, 144, 184);
-		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(ListagemQuartos.class.getResource("/images/Quartos.png")));
-		lblNewLabel_1.setBounds(210, 44, 1117, 119);
-		contentPane.add(lblNewLabel_1);
+		lblNewLabel_1.setIcon(new ImageIcon(ListagemQuartos.class.getResource("/images/Hero block (2).png")));
 		
 		JLabel cadastrar = new JLabel("");
 		cadastrar.addMouseListener(new MouseAdapter() {
@@ -85,8 +81,6 @@ public class ListagemQuartos extends JFrame {
 			}
 		});
 		cadastrar.setIcon(new ImageIcon(ListagemQuartos.class.getResource("/images/Cadastrar.png")));
-		cadastrar.setBounds(456, 218, 120, 34);
-		contentPane.add(cadastrar);
 		
 		JLabel editar = new JLabel("");
 		editar.addMouseListener(new MouseAdapter() {
@@ -100,8 +94,6 @@ public class ListagemQuartos extends JFrame {
 			}
 		});
 		editar.setIcon(new ImageIcon(ListagemQuartos.class.getResource("/images/Editar.png")));
-		editar.setBounds(605, 218, 120, 34);
-		contentPane.add(editar);
 		
 		JLabel excluir = new JLabel("");
 		excluir.addMouseListener(new MouseAdapter() {
@@ -123,21 +115,20 @@ public class ListagemQuartos extends JFrame {
 			}
 		});
 		excluir.setIcon(new ImageIcon(ListagemQuartos.class.getResource("/images/Excluir.png")));
-		excluir.setBounds(754, 218, 120, 34);
-		contentPane.add(excluir);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(38, 279, 1289, 402);
-		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.setBackground(new Color(255, 255, 255));
+		table.setFont(new Font("Ebrima", Font.PLAIN, 12));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"C\u00F3digo", "N\u00FAmero", "M\u00E1ximo H\u00F3spedes", "Cama", "Banheira", "Frigobar", "Tamanho", "Andar", "Vista", "Pre\u00E7o", "Status", "\u00DAltima limpeza"
+				"C\u00F3digo", "N\u00FAmero", "M\u00E1ximo H\u00F3spedes", "Cama", "Banheira", "Frigobar", "Vista", "Pre\u00E7o", "Status"
 			}
 		));
+		
 		scrollPane.setViewportView(table);
 		
 		JLabel detalhar = new JLabel("");
@@ -151,8 +142,49 @@ public class ListagemQuartos extends JFrame {
 			}
 		});
 		detalhar.setIcon(new ImageIcon(ListagemQuartos.class.getResource("/images/Detalhar.png")));
-		detalhar.setBounds(892, 218, 120, 34);
-		contentPane.add(detalhar);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(33)
+					.addComponent(lblNewLabel)
+					.addGap(28)
+					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(451)
+					.addComponent(cadastrar, GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+					.addGap(29)
+					.addComponent(editar, GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+					.addGap(29)
+					.addComponent(excluir, GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+					.addGap(18)
+					.addComponent(detalhar, GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+					.addGap(387))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(33)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 2086, Short.MAX_VALUE)
+					.addGap(280))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(6)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(33)
+							.addComponent(lblNewLabel_1)))
+					.addGap(23)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(cadastrar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(editar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(excluir, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(detalhar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGap(10)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+					.addGap(32))
+		);
+		contentPane.setLayout(gl_contentPane);
 		
 		
 	}

@@ -1,32 +1,25 @@
 package view;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
 import model.Quarto;
-import net.miginfocom.swing.MigLayout;
-
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
-import java.io.IOException;
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-
-import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
@@ -47,7 +40,6 @@ public class CadastroQuarto extends JFrame {
 	private JLabel lblNewLabel_8;
 	private JLabel lblNewLabel_9;
 	private JLabel lblNewLabel_10;
-	private JLabel lblNewLabel_11;
 	private JLabel lblNewLabel_13;
 	private JTextField txtMaxHospedes;
 	private JLabel lblNewLabel_2;
@@ -70,7 +62,7 @@ public class CadastroQuarto extends JFrame {
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CadastroQuarto.class.getResource("/images/Icone.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1920, 1080);
+		setBounds(100, 100, 1420, 800);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(217, 217, 217));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -98,9 +90,6 @@ public class CadastroQuarto extends JFrame {
 
 		lblNewLabel_7 = new JLabel("Tamanho do Quarto *");
 		lblNewLabel_7.setFont(new Font("Ebrima", Font.PLAIN, 20));
-
-		lblNewLabel_11 = new JLabel("Data da Última Limpeza");
-		lblNewLabel_11.setFont(new Font("Ebrima", Font.PLAIN, 20));
 
 		lblNewLabel_6 = new JLabel("Descrição do Quarto");
 		lblNewLabel_6.setFont(new Font("Ebrima", Font.PLAIN, 20));
@@ -145,7 +134,13 @@ public class CadastroQuarto extends JFrame {
 		txtPreco = new JTextField();
 		txtPreco.setColumns(10);
 
-		txtLimpeza = new JTextField();
+		try {
+			MaskFormatter mask = new MaskFormatter("####-##-##");
+			txtLimpeza = new JFormattedTextField(mask);
+		} catch(ParseException e) {
+			e.printStackTrace();
+		}
+		
 		txtLimpeza.setColumns(10);
 
 		// ComboBox
@@ -164,8 +159,12 @@ public class CadastroQuarto extends JFrame {
 
 		// TextArea
 		JTextArea txtaComentario = new JTextArea();
+		txtaComentario.setLineWrap(true);
+		txtaComentario.setRows(5);
 
 		JTextArea txtaDescQuarto = new JTextArea();
+		txtaDescQuarto.setRows(5);
+		txtaDescQuarto.setLineWrap(true);
 
 		// RadioButton
 		JRadioButton rdbtnSimBanheira = new JRadioButton("Sim");
@@ -229,11 +228,11 @@ public class CadastroQuarto extends JFrame {
 						erro2 = true;
 					}
 
-					int limpeza = 0;
+					LocalDate limpeza = null;
 					try {
-						limpeza = Integer.parseInt(txtLimpeza.getText());
+						limpeza = LocalDate.parse(txtLimpeza.getText());
 					} catch(Exception ex) {
-						JOptionPane.showMessageDialog(null, "Data limpeza precisa ser tipo numérico");
+						JOptionPane.showMessageDialog(null, "Data limpeza precisa ser tipo numérico no formato aaa-mm-dd");
 						erro2 = true;
 					}
 
@@ -295,132 +294,152 @@ public class CadastroQuarto extends JFrame {
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(33)
-					.addComponent(lblNewLabel)
-					.addGap(43)
-					.addComponent(lblIconeCadastrarQuarto))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(46)
-					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
-					.addGap(172)
-					.addComponent(lblNewLabel_13)
-					.addGap(162)
-					.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
-					.addGap(126)
-					.addComponent(lblNewLabel_13_1, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(46)
-					.addComponent(txtNumQuarto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(268)
-					.addComponent(txtCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(251)
-					.addComponent(txtMaxHospedes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(248)
-					.addComponent(comboBoxTipoCama, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(46)
-					.addComponent(lblNewLabel_6)
-					.addGap(174)
-					.addComponent(lblDisponibilidadeDeBanheira)
-					.addGap(87)
-					.addComponent(lblNewLabel_4)
-					.addGap(63)
-					.addComponent(lblNewLabel_7))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(46)
-					.addComponent(txtaDescQuarto, GroupLayout.PREFERRED_SIZE, 284, GroupLayout.PREFERRED_SIZE)
-					.addGap(113)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(rdbtnSimBanheira, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-							.addGap(2)
-							.addComponent(rdbtnNaoBanheira, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE))
+							.addGap(33)
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+							.addGap(43)
+							.addComponent(lblIconeCadastrarQuarto, GroupLayout.DEFAULT_SIZE, 1133, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(14)
-							.addComponent(lblNewLabel_8))
+							.addGap(46)
+							.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+							.addGap(172)
+							.addComponent(lblNewLabel_13, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+							.addGap(162)
+							.addComponent(lblNewLabel_3, GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+							.addGap(126)
+							.addComponent(lblNewLabel_13_1, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
+							.addGap(105))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(14)
-							.addComponent(comboBoxAndar, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)))
-					.addGap(134)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addGap(46)
+							.addComponent(txtNumQuarto, GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+							.addGap(268)
+							.addComponent(txtCodigo, GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+							.addGap(251)
+							.addComponent(txtMaxHospedes, 94, 94, 94)
+							.addGap(248)
+							.addComponent(comboBoxTipoCama, 0, 193, Short.MAX_VALUE)
+							.addGap(81))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(36)
-							.addComponent(rdbtnSimFrigobar, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-							.addGap(2)
-							.addComponent(rdbtnNaoFrigobar, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblNewLabel_9)
-						.addComponent(comboBoxVista, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE))
-					.addGap(126)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(txtTamQuarto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_7_1, GroupLayout.PREFERRED_SIZE, 182, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtPreco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(46)
-					.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(46)
-					.addComponent(txtaComentario, GroupLayout.PREFERRED_SIZE, 284, GroupLayout.PREFERRED_SIZE)
-					.addGap(127)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel_10)
-						.addComponent(comboBoxStatus, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE))
-					.addGap(114)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel_5, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtLimpeza, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(37)
-					.addComponent(lblSalvar)
-					.addGap(50)
-					.addComponent(lblCancelar, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
-					.addGap(353))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(1278)
-					.addComponent(lblNewLabel_11))
+							.addGap(46)
+							.addComponent(lblNewLabel_6, GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+							.addGap(174)
+							.addComponent(lblDisponibilidadeDeBanheira, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(87)
+							.addComponent(lblNewLabel_4, GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+							.addGap(63)
+							.addComponent(lblNewLabel_7, GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+							.addGap(76))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(46)
+							.addComponent(txtaDescQuarto, GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+							.addGap(113)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(rdbtnSimBanheira, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+									.addGap(2)
+									.addComponent(rdbtnNaoBanheira, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(14)
+									.addComponent(lblNewLabel_8))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(14)
+									.addComponent(comboBoxAndar, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)))
+							.addGap(134)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(36)
+									.addComponent(rdbtnSimFrigobar, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+									.addGap(2)
+									.addComponent(rdbtnNaoFrigobar, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+									.addGap(12))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblNewLabel_9, GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+									.addGap(153))
+								.addComponent(comboBoxVista, 0, 216, Short.MAX_VALUE))
+							.addGap(126)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(txtTamQuarto, 94, 94, 94)
+									.addGap(96))
+								.addComponent(lblNewLabel_7_1, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(txtPreco, 94, 94, 94)
+									.addGap(96)))
+							.addGap(84))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(46)
+							.addComponent(lblNewLabel_2, GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+							.addGap(1111))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(46)
+							.addComponent(txtaComentario, GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+							.addGap(127)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNewLabel_10)
+								.addComponent(comboBoxStatus, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE))
+							.addGap(114)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNewLabel_5, GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(txtLimpeza, 94, 94, 94)
+									.addGap(64)))
+							.addGap(37)
+							.addComponent(lblSalvar, GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+							.addGap(50)
+							.addComponent(lblCancelar, GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+							.addGap(27)))
+					.addGap(25))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(6)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel)
+						.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(33)
-							.addComponent(lblIconeCadastrarQuarto)))
+							.addComponent(lblIconeCadastrarQuarto, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(24)))
 					.addGap(65)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(6)
-							.addComponent(lblNewLabel_1))
+							.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(6)
-							.addComponent(lblNewLabel_13))
-						.addComponent(lblNewLabel_3)
+							.addComponent(lblNewLabel_13, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblNewLabel_3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(6))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(6)
 							.addComponent(lblNewLabel_13_1)))
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(3)
-							.addComponent(txtNumQuarto, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+							.addComponent(txtNumQuarto, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(3)
-							.addComponent(txtCodigo, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+							.addComponent(txtCodigo, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(3)
-							.addComponent(txtMaxHospedes, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
-						.addComponent(comboBoxTipoCama, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(txtMaxHospedes, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(comboBoxTipoCama, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(12)))
 					.addGap(38)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel_6)
+						.addComponent(lblNewLabel_6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(lblDisponibilidadeDeBanheira)
 						.addComponent(lblNewLabel_4)
-						.addComponent(lblNewLabel_7))
+						.addComponent(lblNewLabel_7, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addGap(1)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(10)
-							.addComponent(txtaDescQuarto, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
+							.addComponent(txtaDescQuarto, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+							.addGap(4))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(6)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -436,39 +455,42 @@ public class CadastroQuarto extends JFrame {
 								.addComponent(rdbtnSimFrigobar, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
 								.addComponent(rdbtnNaoFrigobar, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
 							.addGap(51)
-							.addComponent(lblNewLabel_9)
+							.addComponent(lblNewLabel_9, GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
 							.addGap(6)
-							.addComponent(comboBoxVista, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(comboBoxVista, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(6))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(txtTamQuarto, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+							.addComponent(txtTamQuarto, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
 							.addGap(55)
 							.addComponent(lblNewLabel_7_1)
 							.addGap(3)
-							.addComponent(txtPreco, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(txtPreco, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)))
 					.addGap(7)
-					.addComponent(lblNewLabel_2)
+					.addComponent(lblNewLabel_2, GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
 					.addGap(8)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(3)
-							.addComponent(txtaComentario, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE))
+							.addComponent(txtaComentario, GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(8)
 							.addComponent(lblNewLabel_10)
 							.addGap(3)
 							.addComponent(comboBoxStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblNewLabel_5)
+							.addComponent(lblNewLabel_5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addGap(4)
-							.addComponent(txtLimpeza, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+							.addComponent(txtLimpeza, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+							.addGap(65))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(77)
-							.addComponent(lblSalvar))
+							.addComponent(lblSalvar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(4))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(77)
-							.addComponent(lblCancelar, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)))
-					.addGap(116)
-					.addComponent(lblNewLabel_11))
+							.addComponent(lblCancelar, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+							.addGap(4)))
+					.addGap(144))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
@@ -519,4 +541,5 @@ public class CadastroQuarto extends JFrame {
 		}
 		return erro;
 	}
+	
 }

@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Quarto {
 
@@ -15,14 +15,14 @@ public class Quarto {
 	private int andar; 
 	private String vista;
 	private String status;
-	private int dataLimpeza;
+	private LocalDate dataLimpeza;
 	private String comentarios; 
 	private String codigo;
 	
 	
 	
 	public Quarto(int numero, String cama, int maxHospedes, boolean frigobar, boolean banheira, float preco,
-			float tamanho, int andar, String vista, String status, int dataLimpeza, String codigo) {
+			float tamanho, int andar, String vista, String status, LocalDate dataLimpeza, String codigo) {
 		super();
 		this.numero = numero;
 		this.cama = cama;
@@ -80,10 +80,10 @@ public class Quarto {
 	public void setTamanho(float tamanho) {
 		this.tamanho = tamanho;
 	}
-	public int getDataLimpeza() {
+	public LocalDate getDataLimpeza() {
 		return dataLimpeza;
 	}
-	public void setDataLimpeza(int dataLimpeza) {
+	public void setDataLimpeza(LocalDate dataLimpeza) {
 		this.dataLimpeza = dataLimpeza;
 	}
 	public String getComentarios() {

@@ -9,7 +9,7 @@ import model.Quarto;
 public class QuartosJTableModel extends AbstractTableModel{
 	
 	private ArrayList<Quarto> lista;
-	private String[] colunas ={"Número", "Código", "Máximo Hóspedes", "Cama", "Banheira", "Frigobar", "Tamanho", "Andar", "Vista", "Preço", "Status", "Última limpeza"};
+	private String[] colunas ={"Número", "Código", "Máximo Hóspedes", "Cama", "Banheira", "Frigobar", "Vista", "Preço", "Status"};
 	
 	public QuartosJTableModel(ArrayList<Quarto> lista) {
 		this.lista = lista;
@@ -48,18 +48,12 @@ public class QuartosJTableModel extends AbstractTableModel{
 				return "não";
 			}
 		} else if(columnIndex == 6) {
-			return q.getTamanho();
-		} else if(columnIndex == 7) {
-			return q.getAndar();
-		} else if(columnIndex == 8) {
 			return q.getVista();
-		} else if(columnIndex == 9) {
+		} else if(columnIndex == 7) {
 			return "R$" + q.getPreco();
-		} else if(columnIndex == 10) {
+		} else if(columnIndex == 8) {
 			return q.getStatus();
-		} else if(columnIndex == 11) {
-			return q.getDataLimpeza();
-		}
+		} 
 		return null;
 	}
 	
